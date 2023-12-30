@@ -1,0 +1,21 @@
+@use './variables';
+
+/*
+ * Usage:
+ * palette('red-orange', 500);
+ * palette('red-orange'); <-- defaults to 700
+ */
+@function palette($color-name, $shade: 700) {
+    @if map-has-key(variables.$palette, $color-name) {
+        $color-map: map-get(variables.$palette, $color-name);
+        @if map-has-key($color-map, $shade) {
+            @return map-get($color-map, $shade);
+        } @else {
+            @warn "Shade `#{$shade}` not found for `#{$color-name}`.";
+            @return null;
+        }
+    } @else {
+        @warn "Color `#{$color-name}` not found in the palette.";
+        @return null;
+    }
+}

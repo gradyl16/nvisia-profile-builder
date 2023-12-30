@@ -1,0 +1,91 @@
+$gutter-size-sm: 2rem;
+$gutter-size-md: 3rem;
+$gutter-size-lg: 4rem;
+
+/*
+ * A4 aspect ratio is 1:√2
+ */
+@mixin a4-aspect-ratio($width) {
+    $aspect-ratio: sqrt(2);
+
+    width: $width;
+    max-width: $width;
+
+    height: $width * $aspect-ratio;
+    max-height: $width * $aspect-ratio;
+}
+
+.container {
+    @include a4-aspect-ratio(1024px);
+
+    display: grid;
+    grid-template-rows: 175px 1fr;
+
+    margin-top: 2rem;
+}
+
+.header-container {
+    display: flex;
+    justify-content: center;
+
+    padding: $gutter-size-sm $gutter-size-md;
+
+    background-color: #2d3361;
+    background-image: url('/src/assets//images/svgs/lines-and-dots.svg');
+    background-position-y: 50%;
+
+    & .avatar {
+        $size: 180px;
+
+        position: relative;
+        z-index: 1;
+
+        width: $size;
+        height: $size;
+
+        margin-right: 3rem;
+
+        &::after {
+            content: '';
+
+            position: absolute;
+
+            top: -1rem;
+            left: -1rem;
+            right: -1rem;
+            bottom: -1rem;
+
+            border: 2px dotted #d2d2d2;
+        }
+    }
+}
+
+.sections-container {
+    position: relative;
+    overflow: hidden;
+
+    display: grid;
+    grid-template-columns: 1fr 2px 1fr;
+    gap: $gutter-size-md;
+
+    background-color: white;
+
+    padding: $gutter-size-lg $gutter-size-md $gutter-size-sm $gutter-size-md;
+
+    &::before {
+        content: '';
+        position: absolute;
+        width: 150%;
+        height: 150%;
+        top: -15%;
+        left: -120%;
+        background: url('/src/assets//images/svgs/lines-and-dots.svg') 0 0 no-repeat;
+        transform: rotate(90deg);
+
+        z-index: 0;
+    }
+}
+
+.sections-container * {
+    z-index: 1;
+}

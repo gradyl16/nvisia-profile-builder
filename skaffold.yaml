@@ -1,0 +1,33 @@
+---
+apiVersion: skaffold/v4beta6
+kind: Config
+
+metadata:
+  name: skaffold-int23-react-frontend
+
+profiles:
+- name: local-dev
+  build:
+    artifacts:
+    - image: skaffold-int23-react-frontend-local
+      docker:
+        dockerfile: Dockerfile.local-dev
+  manifests:
+    kustomize:
+      paths:
+      - ./_deploy/kustomize/overlays/local
+  deploy:
+    kubeContext: docker-desktop
+
+- name: local-prod
+  build:
+    artifacts:
+    - image: skaffold-int23-react-frontend-local
+      docker:
+        dockerfile: Dockerfile
+  manifests:
+    kustomize:
+      paths:
+      - ./_deploy/kustomize/overlays/local
+  deploy:
+    kubeContext: docker-desktop

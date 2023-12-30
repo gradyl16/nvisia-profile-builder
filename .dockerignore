@@ -1,0 +1,9 @@
+# MISC
+.git
+_deploy
+Dockerfile*
+.dockerignore
+skaffold.yaml
+
+# NODE.JS
+*/node_modules

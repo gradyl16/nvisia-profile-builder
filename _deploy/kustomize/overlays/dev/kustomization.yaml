@@ -1,0 +1,30 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: develop
+
+images:
+- name: react-frontend-img
+  newName: nvisia/internship-2023-react-frontend
+  
+patches:
+- target:
+    kind: VirtualService
+    name: react-frontend
+  path: virtual-service.yaml
+- target:
+    kind: Deployment
+    name: react-frontend
+  path: deployment.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+- name: frontend-conf
+  files:
+  - devopsMountTest.js
+
+resources:
+- ../../base

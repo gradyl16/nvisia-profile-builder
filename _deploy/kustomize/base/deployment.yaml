@@ -1,0 +1,34 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-frontend
+  labels:
+    app.kubernetes.io/name: react-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: react-frontend
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: react-frontend
+    spec:
+      containers:
+      - name: react-frontend
+        volumeMounts:
+        - name: frontend-conf-vol
+          mountPath: /react-frontend/public/devopsMountTest.js
+          subPath: devopsMountTest.js
+        image: react-frontend-img
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        ports:
+        - containerPort: 5173
+      volumes:
+      - name: frontend-conf-vol
+        configMap:
+          name: frontend-conf

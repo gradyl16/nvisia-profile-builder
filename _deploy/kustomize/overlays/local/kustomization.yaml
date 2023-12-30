@@ -1,0 +1,24 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: default
+
+images:
+- name: react-frontend-img
+  newName: skaffold-int23-react-frontend-local
+
+patchesStrategicMerge:
+- virtual-service.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+- name: frontend-conf
+  files:
+  - devopsMountTest.js
+
+resources:
+- ../../base
+- gateway.yaml

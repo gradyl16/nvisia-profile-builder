@@ -1,0 +1,26 @@
+trigger:
+- main
+- develop
+
+resources:
+  repositories:
+  - repository: profile-builder-templates
+    type: git
+    name: Sprinternship 2023/shared-azdo-pipeline-templates
+    ref: develop
+
+pool:
+  name: vmss-df-lz-sub-df-internships-int23-dev-agent-pool-uscz
+
+stages:
+- stage: CI
+  jobs:
+  - template: docker-build-push-template.yaml@profile-builder-templates
+    parameters:
+      dockerRepo: internship-2023-react-frontend
+- stage: CD
+  jobs:
+  - template: aks-deploy-template.yaml@profile-builder-templates
+    parameters:
+      dockerRepo: internship-2023-react-frontend
+      kubernetesServiceConnection: svcon-aks-sub-df-internships-int23-dev
